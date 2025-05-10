@@ -11,9 +11,9 @@ router.post(
 		check(
 			'telephone',
 			'Номер телефона должен быть не менее 6 и не более 12 символов'
-		).isLength({ min: 6, max: 12 }),
+		).isLength({ min: 6, max: 13 }),
 	],
-	controller.signUp 
+	controller.signUp
 )
 
 router.get('/players', controller.getPlayers)

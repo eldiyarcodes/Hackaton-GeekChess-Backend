@@ -1,6 +1,9 @@
 const Player = require('../models/player')
 const { validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
+const fetch = (...args) =>
+	import('node-fetch').then(({ default: fetch }) => fetch(...args))
+
 const { secret } = require('../config')
 
 const generateAccessToken = id => {
@@ -30,8 +33,27 @@ class AuthController {
 			}
 
 			const player = new Player({ login, telephone })
-
 			await player.save()
+
+			const bitrixResponse = await fetch(
+				`https://geektech.bitrix24.ru/rest/1/e08w1jvst0jj152c/crm.lead.add.json`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+					body: new URLSearchParams({
+						'fields[SOURCE_ID]': '127',
+						'fields[NAME]': login,
+						'fields[TITLE]': 'GEEKS GAME: Хакатон 2025',
+						'fields[PHONE][0][VALUE]': telephone,
+						'fields[PHONE][0][VALUE_TYPE]': 'WORK',
+					}),
+				}
+			)
+
+			const bitrixData = await bitrixResponse.json()
+
 			const token = generateAccessToken(player._id)
 
 			return res.json({
@@ -42,6 +64,7 @@ class AuthController {
 					telephone: player.telephone,
 				},
 				token,
+				bitrix: bitrixData,
 			})
 		} catch (e) {
 			console.log('err: ', e)

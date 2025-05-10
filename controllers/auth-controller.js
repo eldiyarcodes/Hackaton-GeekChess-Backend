@@ -60,6 +60,7 @@ class AuthController {
 				status: 'success',
 				message: 'Пользователь успешно зарегистрирован',
 				player: {
+					_id: player._id,
 					login: player.login,
 					telephone: player.telephone,
 				},

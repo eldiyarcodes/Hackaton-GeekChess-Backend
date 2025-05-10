@@ -1,7 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const authRouter = require('./routes/auth-routes')
-const gameRouter = require('./routes/score-routes')
+const scoreRouter = require('./routes/score-routes')
 
 const PORT = process.env.PORT || 5000
 const DB_URL =
@@ -10,8 +11,9 @@ const DB_URL =
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/score', gameRouter)
+app.use('/api/v1/score', scoreRouter)
 
 const start = async () => {
 	try {

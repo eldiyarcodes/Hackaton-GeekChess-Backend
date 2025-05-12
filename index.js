@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -5,8 +7,7 @@ const authRouter = require('./routes/auth-routes')
 const scoreRouter = require('./routes/score-routes')
 
 const PORT = process.env.PORT || 5000
-const DB_URL =
-	'mongodb+srv://thedolbekov2:wyEJ6g89NWltJrh4@cluster0.jlrv6ho.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const DB_URL = process.env.DATABASE_URL
 
 const app = express()
 

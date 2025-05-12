@@ -14,6 +14,50 @@ const generateAccessToken = id => {
 
 class AuthController {
 	async signUp(req, res) {
+		// #swagger.tags = ['Auth']
+  	// #swagger.description = 'Регистрация нового пользователя'
+
+		/* #swagger.parameters['body'] = {
+        in: 'body',
+        required: true,
+        schema: {
+          login: 'login123',
+          telephone: '+996550101010'
+        }
+		} */
+
+			/* #swagger.responses[200] = {
+					schema: {
+					"status": "success",
+					"message": "Пользователь успешно зарегистрирован",
+					"player": {
+						"_id": "6822090b675832c7ee5dfa09",
+						"login": "login123",
+						"telephone": "+996550101010"
+					},
+					"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVF9UHjbh2_703vsqM....",
+					"bitrix": {
+						"result": 438106,
+						"time": {
+							"start": 1747061003.976503,
+							"finish": 1747061004.325477,
+							"duration": 0.34897398948669434,
+							"processing": 0.32679295539855957,
+							"date_start": "2025-05-12T17:43:23+03:00",
+							"date_finish": "2025-05-12T17:43:24+03:00",
+							"operating_reset_at": 1747061603,
+							"operating": 0.32677698135375977
+						}
+					}
+				}
+		} */
+
+		/* #swagger.responses[409] = {
+					schema: {
+						message: "Пользователь с таким номером телефона существует"
+					}
+		} */
+
 		try {
 			const errors = validationResult(req)
 
@@ -28,7 +72,7 @@ class AuthController {
 
 			if (candidate) {
 				return res
-					.status(400)
+					.status(409)
 					.json({ message: 'Пользователь с таким номером телефона существует' })
 			}
 
@@ -68,18 +112,33 @@ class AuthController {
 				bitrix: bitrixData,
 			})
 		} catch (e) {
-			console.log('err: ', e)
 			res.status(500).json({ message: 'Ошибка при регистрации' })
 		}
 	}
 
 	async getPlayers(req, res) {
+		// #swagger.tags = ['Auth']
+  	// #swagger.description = 'Список всех пользователей'
+
+			/* #swagger.responses[200] = {
+					schema: {
+						status: "success",
+						data: [
+							{
+								_id: '507f1f77bcf86cd799439011',
+								login: 'login123',
+								telephone: '+996550101010',
+								score: 0
+							}
+						]
+					}
+		} */
+
 		try {
 			const players = await Player.find()
 
-			res.json({ data: players })
+			res.json({ status: 'success', data: players })
 		} catch (e) {
-			console.log('err: ', e)
 			res.status(500).json({ message: 'Ошибка при получении списка игроков' })
 		}
 	}

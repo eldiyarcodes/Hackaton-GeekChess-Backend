@@ -1,0 +1,365 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Knight Dash API",
+    "description": "API documentation",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/v1/auth/sign-up": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Регистрация нового пользователя",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "login": {
+                  "type": "string",
+                  "example": "login123"
+                },
+                "telephone": {
+                  "type": "string",
+                  "example": "+996550101010"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Пользователь успешно зарегистрирован"
+                },
+                "player": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "6822090b675832c7ee5dfa09"
+                    },
+                    "login": {
+                      "type": "string",
+                      "example": "login123"
+                    },
+                    "telephone": {
+                      "type": "string",
+                      "example": "+996550101010"
+                    }
+                  }
+                },
+                "token": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVF9UHjbh2_703vsqM...."
+                },
+                "bitrix": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number",
+                      "example": 438106
+                    },
+                    "time": {
+                      "type": "object",
+                      "properties": {
+                        "start": {
+                          "type": "number",
+                          "example": 1747061003.976503
+                        },
+                        "finish": {
+                          "type": "number",
+                          "example": 1747061004.325477
+                        },
+                        "duration": {
+                          "type": "number",
+                          "example": 0.34897398948669434
+                        },
+                        "processing": {
+                          "type": "number",
+                          "example": 0.32679295539855957
+                        },
+                        "date_start": {
+                          "type": "string",
+                          "example": "2025-05-12T17:43:23+03:00"
+                        },
+                        "date_finish": {
+                          "type": "string",
+                          "example": "2025-05-12T17:43:24+03:00"
+                        },
+                        "operating_reset_at": {
+                          "type": "number",
+                          "example": 1747061603
+                        },
+                        "operating": {
+                          "type": "number",
+                          "example": 0.32677698135375977
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Пользователь с таким номером телефона существует"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/players": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Список всех пользователей",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "507f1f77bcf86cd799439011"
+                      },
+                      "login": {
+                        "type": "string",
+                        "example": "login123"
+                      },
+                      "telephone": {
+                        "type": "string",
+                        "example": "+996550101010"
+                      },
+                      "score": {
+                        "type": "number",
+                        "example": 0
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/score/update-score": {
+      "post": {
+        "tags": [
+          "Score"
+        ],
+        "description": "Обновление score игрока",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "6822090b675832c7ee5dfa09"
+                },
+                "score": {
+                  "type": "string",
+                  "example": "1500"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Результат сохранён"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "6822090b675832c7ee5dfa09"
+                      },
+                      "login": {
+                        "type": "string",
+                        "example": "login123"
+                      },
+                      "telephone": {
+                        "type": "string",
+                        "example": "+996550101010"
+                      },
+                      "score": {
+                        "type": "number",
+                        "example": 1500
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Ошибка при обновлении score"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/score/top-players": {
+      "get": {
+        "tags": [
+          "Score"
+        ],
+        "description": "Топ 10 игрков",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "507f1f77bcf86cd799439011"
+                      },
+                      "login": {
+                        "type": "string",
+                        "example": "login123"
+                      },
+                      "telephone": {
+                        "type": "string",
+                        "example": "+996550101010"
+                      },
+                      "score": {
+                        "type": "number",
+                        "example": 0
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Ошибка при получении списка игроков"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas": [
+    "http"
+  ]
+}

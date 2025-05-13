@@ -4,60 +4,14 @@ const jwt = require('jsonwebtoken')
 const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args))
 
-const { secret } = require('../config')
-
 const generateAccessToken = id => {
 	const payload = { id }
 
-	return jwt.sign(payload, secret, { expiresIn: '24h' })
+	return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' })
 }
 
 class AuthController {
 	async signUp(req, res) {
-		// #swagger.tags = ['Auth']
-  	// #swagger.description = 'Регистрация нового пользователя'
-
-		/* #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-          login: 'login123',
-          telephone: '+996550101010'
-        }
-		} */
-
-			/* #swagger.responses[200] = {
-					schema: {
-					"status": "success",
-					"message": "Пользователь успешно зарегистрирован",
-					"player": {
-						"_id": "6822090b675832c7ee5dfa09",
-						"login": "login123",
-						"telephone": "+996550101010"
-					},
-					"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVF9UHjbh2_703vsqM....",
-					"bitrix": {
-						"result": 438106,
-						"time": {
-							"start": 1747061003.976503,
-							"finish": 1747061004.325477,
-							"duration": 0.34897398948669434,
-							"processing": 0.32679295539855957,
-							"date_start": "2025-05-12T17:43:23+03:00",
-							"date_finish": "2025-05-12T17:43:24+03:00",
-							"operating_reset_at": 1747061603,
-							"operating": 0.32677698135375977
-						}
-					}
-				}
-		} */
-
-		/* #swagger.responses[409] = {
-					schema: {
-						message: "Пользователь с таким номером телефона существует"
-					}
-		} */
-
 		try {
 			const errors = validationResult(req)
 
@@ -116,24 +70,34 @@ class AuthController {
 		}
 	}
 
+	async signIn(req, res) {
+		try {
+			const errors = validationResult(req)
+			if (!errors.isEmpty()) {
+				return res.status(400).json({ message: 'Ошибка при входе', errors })
+			}
+
+			const { login, telephone } = req.body
+			const player = await Player.findOne({ login, telephone })
+
+			if (!player) {
+				return res.status(404).json({ message: 'Пользователь не найден' })
+			}
+
+			const token = generateAccessToken(player._id)
+
+			return res.json({
+				status: 'success',
+				message: 'Авторизация прошла успешно',
+				token,
+			})
+		} catch (error) {
+			console.log('err with login: '.error)
+			res.status(500).json({ message: 'Ошибка при входе' })
+		}
+	}
+
 	async getPlayers(req, res) {
-		// #swagger.tags = ['Auth']
-  	// #swagger.description = 'Список всех пользователей'
-
-			/* #swagger.responses[200] = {
-					schema: {
-						status: "success",
-						data: [
-							{
-								_id: '507f1f77bcf86cd799439011',
-								login: 'login123',
-								telephone: '+996550101010',
-								score: 0
-							}
-						]
-					}
-		} */
-
 		try {
 			const players = await Player.find()
 

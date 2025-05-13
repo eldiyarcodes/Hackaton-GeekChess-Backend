@@ -1,0 +1,180 @@
+// === AUTH ===
+
+																																					(---sign-up---):
+
+	// #swagger.tags = ['Auth']
+	// #swagger.description = 'Регистрация нового пользователя'
+
+	/* #swagger.parameters['body'] = {
+		in: 'body',
+		required: true,
+		schema: {
+			login: 'login123',
+			telephone: '+996550101010'
+		}
+	} */
+
+	/* #swagger.responses[200] = {
+			schema: {
+				"status": "success",
+				"message": "Пользователь успешно зарегистрирован",
+				"player": {
+					"_id": "6822090b675832c7ee5dfa09",
+					"login": "login123",
+					"telephone": "+996550101010"
+				},
+				"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVF9UHjbh2_703vsqM....",
+				"bitrix": {
+					"result": 438106,
+					"time": {
+						"start": 1747061003.976503,
+						"finish": 1747061004.325477,
+						"duration": 0.34897398948669434,
+						"processing": 0.32679295539855957,
+						"date_start": "2025-05-12T17:43:23+03:00",
+						"date_finish": "2025-05-12T17:43:24+03:00",
+						"operating_reset_at": 1747061603,
+						"operating": 0.32677698135375977
+					}
+				}
+			}
+	} */
+
+	/* #swagger.responses[409] = {
+			schema: {
+				message: "Пользователь с таким номером телефона существует"
+			}
+	} */
+
+																																					(---sign-in---):
+
+	// #swagger.tags = ['Auth']
+	// #swagger.description = 'Авторизация пользователя по логину и телефону'
+
+	/* #swagger.parameters['body'] = {
+		in: 'body',
+		required: true,
+		schema: {
+			login: 'login123',
+			telephone: '+996550101010'
+		}
+	} */
+
+	/* #swagger.responses[200] = {
+		schema: {
+			status: 'success',
+			message: 'Авторизация прошла успешно',
+			token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVF9UHjbh2_703vsqM...'
+		}
+	} */
+
+	/* #swagger.responses[404] = {
+		schema: {
+			message: 'Пользователь не найден'
+		}
+	} */
+
+	/* #swagger.responses[400] = {
+		description: 'Ошибка валидации',
+		schema: {
+			message: 'Ошибка при входе',
+			errors: []
+		}
+	} */
+
+																																					(---get-all-players---):
+
+	// #swagger.tags = ['Auth']
+	// #swagger.description = 'Список всех пользователей'
+	// #swagger.security = [{ bearerAuth: [] }]
+
+	/* #swagger.responses[200] = {
+		schema: {
+			status: "success",
+			data: [
+				{
+					_id: '507f1f77bcf86cd799439011',
+					login: 'login123',
+					telephone: '+996550101010',
+					score: 0
+				}
+			]
+		}
+	} */
+
+
+
+
+
+
+
+
+
+// === SCORE ===
+
+
+																																					(---update-score---):
+
+	// #swagger.tags = ['Score']
+  	// #swagger.description = 'Обновление score игрока'
+
+		/* #swagger.parameters['body'] = {
+        in: 'body',
+        required: true,
+        schema: {
+          id: '6822090b675832c7ee5dfa09',
+          score: '1500'
+        }
+		} */
+
+			/* #swagger.responses[200] = {
+					schema: {
+						status: "success",
+						message: "Результат сохранён",
+						data: [
+							{
+								"_id": "6822090b675832c7ee5dfa09",
+								"login": "login123",
+								"telephone": "+996550101010",
+								"score": 1500
+							}
+						]
+					}
+		} */
+	
+		/* #swagger.responses[500] = {
+					schema: {
+						message: "Ошибка при обновлении score",
+					}
+		} */
+
+																																					(---get-top-players---):
+
+	// #swagger.tags = ['Score']
+  	// #swagger.description = 'Топ 10 игрков'
+
+			/* #swagger.responses[200] = {
+					schema: {
+						status: "success",
+						data: [
+							{
+								_id: '507f1f77bcf86cd799439011',
+								login: 'login123',
+								telephone: '+996550101010',
+								score: 0
+							}
+						]
+					}
+		} */
+
+		/* #swagger.responses[500] = {
+					schema: {
+						message: "Ошибка при получении списка игроков",
+					}
+		} */
+
+																																					(---  ---):
+
+
+
+

@@ -3,10 +3,10 @@ const swaggerAutogen = require('swagger-autogen')()
 const doc = {
 	info: {
 		title: 'Knight Dash API',
-		description: 'API documentation'
+		description: 'API documentation',
 	},
 	host: 'localhost:5000',
-	schemas: ['http']
+	schemas: ['http'],
 }
 
 const outputFile = './swagger-output.json'

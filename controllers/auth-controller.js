@@ -89,6 +89,11 @@ class AuthController {
 			return res.json({
 				status: 'success',
 				message: 'Авторизация прошла успешно',
+				player: {
+					_id: player._id,
+					login: player.login,
+					telephone: player.telephone,
+				},
 				token,
 			})
 		} catch (error) {

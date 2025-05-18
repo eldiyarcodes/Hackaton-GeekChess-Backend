@@ -21,6 +21,8 @@ app.use(
 		methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 	})
 )
+app.options('*', cors())
+
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/score', scoreRouter)
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))

@@ -9,7 +9,7 @@ const swaggerDocument = require('./swagger-output.json')
 const authRouter = require('./routes/auth-routes')
 const scoreRouter = require('./routes/score-routes')
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT
 const DB_URL = process.env.DATABASE_URL
 
 const app = express()

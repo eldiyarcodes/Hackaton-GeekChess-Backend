@@ -66,7 +66,7 @@ class AuthController {
 				bitrix: bitrixData,
 			})
 		} catch (e) {
-			res.status(500).json({ message: 'Ошибка при регистрации' })
+			res.status(500).json({ message: 'Ошибка при регистрации', error: e })
 		}
 	}
 
@@ -97,7 +97,6 @@ class AuthController {
 				token,
 			})
 		} catch (error) {
-			console.log('err with login: '.error)
 			res.status(500).json({ message: 'Ошибка при входе' })
 		}
 	}

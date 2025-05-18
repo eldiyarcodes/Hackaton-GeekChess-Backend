@@ -15,7 +15,12 @@ const DB_URL = process.env.DATABASE_URL
 const app = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(
+	cors({
+		origin: ['https://knight-dash.vercel.app', 'http://localhost:5173'],
+		methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+	})
+)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/score', scoreRouter)
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))

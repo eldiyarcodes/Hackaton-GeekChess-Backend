@@ -1,17 +1,30 @@
-const swaggerAutogen = require('swagger-autogen')()
+const swaggerJSDoc = require('swagger-jsdoc')
 
-const doc = {
-	info: {
-		title: 'Knight Dash API',
-		description: 'API documentation',
+const options = {
+	definition: {
+		openapi: '3.0.0',
+		info: {
+			title: 'Knight Dash API',
+			version: '1.0.0',
+			description: 'API документация для Knight Dash',
+		},
+		servers: [
+			{
+				url: 'http://localhost:8080',
+			},
+		],
+		components: {
+			securitySchemes: {
+				bearerAuth: {
+					type: 'http',
+					scheme: 'bearer',
+					bearerFormat: 'JWT',
+				},
+			},
+		},
 	},
-	host: 'localhost:5000',
-	schemas: ['http'],
+	apis: ['./routes/*.js'],
 }
 
-const outputFile = './swagger-output.json'
-const endpointFiles = ['./index.js']
-
-swaggerAutogen(outputFile, endpointFiles, doc).then(() => {
-	require('./index.js')
-})
+const swaggerSpec = swaggerJSDoc(options)
+module.exports = swaggerSpec

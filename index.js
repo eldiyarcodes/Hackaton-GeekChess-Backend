@@ -4,8 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const swaggerUi = require('swagger-ui-express')
-
-const swaggerDocument = require('./swagger-output.json')
+const swaggerSpec = require('./swagger')
 const authRouter = require('./routes/auth-routes')
 const scoreRouter = require('./routes/score-routes')
 
@@ -25,7 +24,7 @@ app.options('*', cors())
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/score', scoreRouter)
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 const start = async () => {
 	try {
